@@ -10,15 +10,14 @@ app.use(express.json());
 app.use(cors());
 // Serve static files from the "public" folder
 app.use('/photo', express.static(path.join(__dirname, 'public/photo')));
-
 dotenv.config({ path: './config.env' });
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, 'public/photo'); // Path to store uploaded files
+		cb(null, 'public/photo');
 	},
 	filename: (req, file, cb) => {
-		cb(null, `${Date.now()}-${file.originalname}`); // Unique filename
+		cb(null, Date.now() + path.extname(file.originalname)); // Add timestamp to avoid overwriting
 	},
 });
 
